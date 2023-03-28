@@ -50,7 +50,8 @@ lateinit var porteriaA : Bitmap
 lateinit var porteriaB : Bitmap
 lateinit var cancha : Bitmap
 
-
+private val gravity = 9.81f // valor de la gravedad en m/s^2
+private val friction = 0.95f // factor de fricción
 
 class MainActivity : AppCompatActivity(),SensorEventListener {
 
@@ -121,11 +122,17 @@ class MainActivity : AppCompatActivity(),SensorEventListener {
         velocidadX += (acelerometroX * frameTime)
         velocidadY += (acelerometroY * frameTime)
 
-        val xS = (velocidadX / 2 * frameTime)
-        val yS = (velocidadY / 2 * frameTime)
+        velocidadX *= friction
+        velocidadY *= friction
+
+        val xS = (velocidadX / 2 - frameTime)
+        val yS = (velocidadY / 2 - frameTime)
 
         posX -= xS
         posY -= yS
+
+        //posX += velocidadX * frameTime
+        //posY += velocidadY * frameTime
 
         var anoto = false
 
